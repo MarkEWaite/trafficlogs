@@ -18,6 +18,7 @@ from collections import Counter
 file_request_counts = defaultdict(int)
 file_request_sizes = defaultdict(float)
 ip_address_sizes = defaultdict(float)
+repo_request_sizes = defaultdict(float)
 
 #-----------------------------------------------------------------------
 
@@ -34,11 +35,14 @@ def process_one_file(filename):
             file_request_counts[file_requested] += 1
             file_request_sizes[file_requested] += file_size_in_mb
             ip_address_sizes[ip_address] += file_size_in_mb
+            repo = file_requested.split(':')[0]
+            repo_request_sizes[repo] += file_size_in_mb
             # Use counter to short-circuit log file reading during development
             counter = counter + 1
-            # if (counter > 5250):
-            #     break
+            if (counter > 5280):
+                break
     print("Requested " + str(len(file_request_counts)) + " distinct files")
+    print("Requests to " + str(len(repo_request_sizes)) + " distinct repos")
     print("Requests from " + str(len(ip_address_sizes)) + " distinct IP addresses")
 
 #-----------------------------------------------------------------------
@@ -56,6 +60,10 @@ def print_summary():
     print("file_request_counts is")
     sorted_file_request_counts = sorted(file_request_counts.items(), key = lambda kv: kv[1], reverse=True)
     pprint.pprint(sorted_file_request_counts[:15])
+    print("")
+    print("repo_request_sizes (in MB) is")
+    sorted_repo_request_sizes = sorted(repo_request_sizes.items(), key = lambda kv: kv[1], reverse=True)
+    pprint.pprint(sorted_repo_request_sizes[:15])
 
 #-----------------------------------------------------------------------
 
