@@ -26,7 +26,7 @@ def process_one_file(filename):
     print("Processing " + filename)
     with open(filename, 'r') as f:
         # Use counter to short-circuit log file reading during development
-        # counter = 0
+        counter = 0
         for row in csv.reader(f, delimiter='|'):
             ip_address = row[4]
             file_requested = row[5]
@@ -35,7 +35,7 @@ def process_one_file(filename):
             file_request_sizes[file_requested] += file_size_in_mb
             ip_address_sizes[ip_address] += file_size_in_mb
             # Use counter to short-circuit log file reading during development
-            # counter = counter + 1
+            counter = counter + 1
             # if (counter > 5250):
             #     break
     print("Requested " + str(len(file_request_counts)) + " distinct files")
