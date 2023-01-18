@@ -63,7 +63,7 @@ def print_summary():
     print("")
     print("repo_request_sizes (in MB) is")
     sorted_repo_request_sizes = sorted(repo_request_sizes.items(), key = lambda kv: kv[1], reverse=True)
-    pprint.pprint(sorted_repo_request_sizes[:15])
+    pprint.pprint(sorted_repo_request_sizes)
 
 #-----------------------------------------------------------------------
 
